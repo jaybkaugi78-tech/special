@@ -425,6 +425,16 @@ section {
   opacity: 0.7;
 }
 
+.card-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violet);
+  opacity: 0.6;
+  margin-bottom: 0.6rem;
+}
+
 /* ─── COUNTER ─── */
 .counter-section {
   text-align: center;
