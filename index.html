@@ -4,17 +4,13 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Jay & Millie</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<!-- Ambient orbs -->
+<!-- Ambient glow -->
 <div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-
-<!-- Petal canvas -->
-<canvas id="petal-canvas"></canvas>
 
 <!-- ── LOGIN GATE ── -->
 <div id="gate">
@@ -37,6 +33,11 @@
   <div class="hero">
     <p class="hero-eyebrow">A private world for two</p>
     <h1 class="hero-names">
+      <span class="sparkle sparkle-1">✦</span>
+      <span class="sparkle sparkle-2">✦</span>
+      <span class="sparkle sparkle-3">✦</span>
+      <span class="sparkle sparkle-4">✦</span>
+      <span class="sparkle sparkle-5">✦</span>
       <span class="name-jay">Jay</span>
       <span class="amp"> &amp; </span>
       <span class="name-millie">Millie</span>
@@ -102,6 +103,7 @@
   <div class="counter-section reveal">
     <p class="section-label">Time well spent</p>
     <h2 class="section-title">Every day with you counts</h2>
+    <p class="counter-number" id="days-count"></p>
     <p class="counter-label">Days of loving you</p>
   </div>
 
@@ -134,7 +136,7 @@
     <p class="section-label">Our soundtrack</p>
     <h2 class="section-title">Songs that are <em>ours</em></h2>
     <div class="playlist-wrap">
-      <div class="playlist-track">
+      <div class="playlist-track" onclick="playTrack(this)" data-track="Kiss It Better" data-artist="Rihanna" tabindex="0" role="button">
         <span class="track-num">1</span>
         <div class="track-vinyl"></div>
         <div class="track-info">
@@ -142,8 +144,9 @@
           <p class="track-artist">Rihanna</p>
         </div>
         <span class="track-vibe">Our song</span>
+        <span class="track-play">▶</span>
       </div>
-      <div class="playlist-track">
+      <div class="playlist-track" onclick="playTrack(this)" data-track="Forever and for Always" data-artist="Shania Twain" tabindex="0" role="button">
         <span class="track-num">2</span>
         <div class="track-vinyl"></div>
         <div class="track-info">
@@ -151,8 +154,9 @@
           <p class="track-artist">Shania Twain</p>
         </div>
         <span class="track-vibe">Forever</span>
+        <span class="track-play">▶</span>
       </div>
-      <div class="playlist-track">
+      <div class="playlist-track" onclick="playTrack(this)" data-track="Breathless" data-artist="Shayne Ward" tabindex="0" role="button">
         <span class="track-num">3</span>
         <div class="track-vinyl"></div>
         <div class="track-info">
@@ -160,8 +164,9 @@
           <p class="track-artist">Shayne Ward</p>
         </div>
         <span class="track-vibe">That's you</span>
+        <span class="track-play">▶</span>
       </div>
-      <div class="playlist-track">
+      <div class="playlist-track" onclick="playTrack(this)" data-track="Drowning" data-artist="Backstreet Boys" tabindex="0" role="button">
         <span class="track-num">4</span>
         <div class="track-vinyl"></div>
         <div class="track-info">
@@ -169,8 +174,9 @@
           <p class="track-artist">Backstreet Boys</p>
         </div>
         <span class="track-vibe">Deep feels</span>
+        <span class="track-play">▶</span>
       </div>
-      <div class="playlist-track">
+      <div class="playlist-track" onclick="playTrack(this)" data-track="No Air" data-artist="Jordin Sparks" tabindex="0" role="button">
         <span class="track-num">5</span>
         <div class="track-vinyl"></div>
         <div class="track-info">
@@ -178,8 +184,9 @@
           <p class="track-artist">Jordin Sparks</p>
         </div>
         <span class="track-vibe">Can't breathe without you</span>
+        <span class="track-play">▶</span>
       </div>
-      <div class="playlist-track">
+      <div class="playlist-track" onclick="playTrack(this)" data-track="Only Girl (In the World)" data-artist="Rihanna" tabindex="0" role="button">
         <span class="track-num">6</span>
         <div class="track-vinyl"></div>
         <div class="track-info">
@@ -187,6 +194,7 @@
           <p class="track-artist">Rihanna</p>
         </div>
         <span class="track-vibe">She's everything</span>
+        <span class="track-play">▶</span>
       </div>
     </div>
   </section>
@@ -232,10 +240,29 @@
         </p>
       </div>
 
+      <div class="letter-card">
+        <div class="lc-header">
+          <div class="lc-avatar jay-av">🖤</div>
+          <div class="lc-meta">
+            <p class="lc-from">Jay to Millie</p>
+            <p class="lc-date">On the future I keep choosing</p>
+          </div>
+        </div>
+        <p class="lc-body">
+          Millie, I used to think love was something you fell into and hoped would last.
+          Now I know better — love is something you build, on purpose, every single day,
+          and I choose you every time. I choose you on the mornings the coffee goes cold
+          because I cannot stop looking at you, and on the nights neither of us has anything
+          left to give and we hold on anyway. I see decades ahead of us — quiet kitchens,
+          arguments about nothing, a life stitched together one ordinary Tuesday at a time —
+          and every version of that future has your hand in mine. You are not just who I love.
+          You are who I am building a life around. Forever is not a promise I am making lightly.
+          It is the only plan I have.
+        </p>
+      </div>
+
     </div>
   </section>
-
-  <!-- PHOTO GALLERY -->
   <section class="reveal">
     <p class="section-label">Our memories</p>
     <h2 class="section-title">A gallery of <em>us</em></h2>

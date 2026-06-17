@@ -37,32 +37,22 @@
   const el = document.getElementById('days-count');
   if (el) el.innerHTML = `<span>${diffDays.toLocaleString()}</span>`;
 
-  /* ── GALLERY PHOTO UPLOAD ── */
-  function triggerUpload(index) {
-    const inputs = document.querySelectorAll('#gallery-grid input[type="file"]');
-    if (inputs[index]) inputs[index].click();
+  /* ── PLAYLIST: open the real track on Spotify ── */
+  function playTrack(el) {
+    const track = el.dataset.track;
+    const artist = el.dataset.artist;
+    const url = 'https://open.spotify.com/search/' + encodeURIComponent(track + ' ' + artist);
+    window.open(url, '_blank', 'noopener');
   }
 
-  function loadPhoto(input, index) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const item = input.closest('.gallery-item');
-      // Remove placeholder content
-      const placeholder = item.querySelector('.gallery-placeholder');
-      if (placeholder) placeholder.remove();
-      // Remove existing img if any
-      const existingImg = item.querySelector('.gallery-img');
-      if (existingImg) existingImg.remove();
-      // Insert image
-      const img = document.createElement('img');
-      img.className = 'gallery-img';
-      img.src = e.target.result;
-      item.insertBefore(img, item.querySelector('.upload-overlay'));
-    };
-    reader.readAsDataURL(file);
-  }
+  document.querySelectorAll('.playlist-track').forEach(t => {
+    t.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        playTrack(t);
+      }
+    });
+  });
 
   /* ── SCROLL REVEAL ── */
   const reveals = document.querySelectorAll('.reveal');
@@ -75,69 +65,3 @@
     });
   }, { threshold: 0.12 });
   reveals.forEach(r => obs.observe(r));
-
-  /* ── FALLING PETALS ── */
-  const canvas = document.getElementById('petal-canvas');
-  const ctx = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const PETAL_COUNT = 28;
-  const petals = [];
-
-  const colors = [
-    'rgba(168,85,247,0.35)',
-    'rgba(139,92,246,0.28)',
-    'rgba(216,180,254,0.22)',
-    'rgba(124,58,237,0.2)',
-    'rgba(243,232,255,0.18)',
-  ];
-
-  class Petal {
-    constructor() { this.reset(true); }
-    reset(init = false) {
-      this.x = Math.random() * canvas.width;
-      this.y = init ? Math.random() * canvas.height : -20;
-      this.size = 4 + Math.random() * 7;
-      this.speedY = 0.4 + Math.random() * 0.7;
-      this.speedX = (Math.random() - 0.5) * 0.5;
-      this.angle = Math.random() * Math.PI * 2;
-      this.spin = (Math.random() - 0.5) * 0.02;
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.opacity = 0.15 + Math.random() * 0.35;
-      this.wobble = Math.random() * Math.PI * 2;
-      this.wobbleSpeed = 0.015 + Math.random() * 0.01;
-    }
-    update() {
-      this.wobble += this.wobbleSpeed;
-      this.x += this.speedX + Math.sin(this.wobble) * 0.4;
-      this.y += this.speedY;
-      this.angle += this.spin;
-      if (this.y > canvas.height + 30) this.reset();
-    }
-    draw() {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.angle);
-      ctx.globalAlpha = this.opacity;
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, this.size * 0.55, this.size, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  for (let i = 0; i < PETAL_COUNT; i++) petals.push(new Petal());
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    petals.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animate);
-  }
-  animate();
